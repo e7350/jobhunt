@@ -73,7 +73,7 @@ function JobForm({ user }) {
         setCompany(jobDetails.company || '')
         setSalary(jobDetails.salary || '')
         setLocation(jobDetails.location || '')
-        setInitialNote(`Description: ${jobDetails.description || 'N/A'}
+        setInitialNote(`${jobDetails.description || 'N/A'}
 Requirements: ${
           jobDetails.requirements ? jobDetails.requirements.join(', ') : 'N/A'
         }`)
@@ -180,7 +180,7 @@ Requirements: ${
             htmlFor="initialNote"
             className="block text-sm font-medium text-secondary-700 mb-1"
           >
-            Initial Note (optional)
+            Note (optional)
           </label>
           <textarea
             id="initialNote"
