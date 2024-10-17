@@ -84,7 +84,25 @@ function JobCard({ job, onUpdate, user }) {
         <h3 className="text-xl font-semibold text-secondary-900 mb-2">
           {job.title}
         </h3>
-        <p className="text-secondary-600 mb-4">{job.company}</p>
+        <p className="text-secondary-600 mb-2">{job.company}</p>
+        {job.location && (
+          <p className="text-secondary-600 mb-2">Location: {job.location}</p>
+        )}
+        {job.salary && (
+          <p className="text-secondary-600 mb-2">Salary: {job.salary}</p>
+        )}
+        {job.url && (
+          <p className="text-secondary-600 mb-2">
+            <a
+              href={job.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-600 hover:underline"
+            >
+              Job Posting
+            </a>
+          </p>
+        )}
         <div className="flex items-center mb-4">
           <select
             value={job.status}

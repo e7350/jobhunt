@@ -13,10 +13,22 @@ function JobForm({ user }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
+  const [salary, setSalary] = useState('')
+  const [location, setLocation] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const job = await addJob({ title, company, status }, user.$id)
+    const job = await addJob(
+      {
+        title,
+        company,
+        status,
+        salary,
+        location,
+        url: jobUrl,
+      },
+      user.$id,
+    )
     if (initialNote) {
       await addNote({ jobId: job.$id, content: initialNote }, user.$id)
     }
@@ -59,12 +71,12 @@ function JobForm({ user }) {
       if (jobDetails) {
         setTitle(jobDetails.title || '')
         setCompany(jobDetails.company || '')
-        setInitialNote(`Location: ${jobDetails.location || 'N/A'}
-Description: ${jobDetails.description || 'N/A'}
+        setSalary(jobDetails.salary || '')
+        setLocation(jobDetails.location || '')
+        setInitialNote(`Description: ${jobDetails.description || 'N/A'}
 Requirements: ${
           jobDetails.requirements ? jobDetails.requirements.join(', ') : 'N/A'
-        }
-Salary: ${jobDetails.salary || 'N/A'}`)
+        }`)
       } else {
         setError(
           "Couldn't extract job details. Please fill in the form manually.",
@@ -208,6 +220,38 @@ Salary: ${jobDetails.salary || 'N/A'}`)
             value={initialTaskDueDate}
             onChange={(e) => setInitialTaskDueDate(e.target.value)}
             className="input"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="salary"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
+            Salary (optional)
+          </label>
+          <input
+            type="text"
+            id="salary"
+            value={salary}
+            onChange={(e) => setSalary(e.target.value)}
+            className="input"
+            maxLength={100}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="location"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
+            Location (optional)
+          </label>
+          <input
+            type="text"
+            id="location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="input"
+            maxLength={100}
           />
         </div>
         <button type="submit" className="btn btn-primary w-full">
