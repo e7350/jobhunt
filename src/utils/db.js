@@ -28,6 +28,10 @@ export const addJob = async (job, userId) => {
       status: job.status || 'not-started',
       createdAt: currentTime,
       updatedAt: currentTime,
+      location: job.location || null,
+      description: job.description || null,
+      requirements: job.requirements || [],
+      salary: job.salary || null,
     },
   )
 }
