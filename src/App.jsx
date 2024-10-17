@@ -41,11 +41,15 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={user ? <JobList /> : <Navigate to="/login" />}
+              element={
+                user ? <JobList user={user} /> : <Navigate to="/login" />
+              }
             />
             <Route
               path="/add"
-              element={user ? <JobForm /> : <Navigate to="/login" />}
+              element={
+                user ? <JobForm user={user} /> : <Navigate to="/login" />
+              }
             />
             <Route
               path="/login"

@@ -2,22 +2,30 @@ import { useState } from 'react'
 import { addJob, addNote, addTask } from '../utils/db'
 import { useNavigate } from 'react-router-dom'
 
-function JobForm() {
+function JobForm({ user }) {
   const [title, setTitle] = useState('')
   const [company, setCompany] = useState('')
-  const [status, setStatus] = useState('started')
+  const [status, setStatus] = useState('not-started')
   const [initialNote, setInitialNote] = useState('')
   const [initialTask, setInitialTask] = useState('')
+  const [initialTaskDueDate, setInitialTaskDueDate] = useState('')
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const job = await addJob({ title, company, status })
+    const job = await addJob({ title, company, status }, user.$id)
     if (initialNote) {
-      await addNote({ jobId: job.$id, content: initialNote })
+      await addNote({ jobId: job.$id, content: initialNote }, user.$id)
     }
     if (initialTask) {
-      await addTask({ jobId: job.$id, description: initialTask })
+      await addTask(
+        {
+          jobId: job.$id,
+          description: initialTask,
+          dueDate: initialTaskDueDate || null,
+        },
+        user.$id,
+      )
     }
     navigate('/')
   }
@@ -42,6 +50,7 @@ function JobForm() {
             onChange={(e) => setTitle(e.target.value)}
             className="input"
             required
+            maxLength={100}
           />
         </div>
         <div>
@@ -58,6 +67,7 @@ function JobForm() {
             onChange={(e) => setCompany(e.target.value)}
             className="input"
             required
+            maxLength={100}
           />
         </div>
         <div>
@@ -73,6 +83,7 @@ function JobForm() {
             onChange={(e) => setStatus(e.target.value)}
             className="input"
           >
+            <option value="not-started">Not Started</option>
             <option value="started">Started</option>
             <option value="interviewing">Interviewing</option>
             <option value="completed">Completed</option>
@@ -91,6 +102,7 @@ function JobForm() {
             onChange={(e) => setInitialNote(e.target.value)}
             className="input"
             rows="3"
+            maxLength={1000}
           />
         </div>
         <div>
@@ -105,6 +117,22 @@ function JobForm() {
             id="initialTask"
             value={initialTask}
             onChange={(e) => setInitialTask(e.target.value)}
+            className="input"
+            maxLength={200}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="initialTaskDueDate"
+            className="block text-sm font-medium text-secondary-700 mb-1"
+          >
+            Initial Task Due Date (optional)
+          </label>
+          <input
+            type="date"
+            id="initialTaskDueDate"
+            value={initialTaskDueDate}
+            onChange={(e) => setInitialTaskDueDate(e.target.value)}
             className="input"
           />
         </div>
