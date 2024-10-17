@@ -37,13 +37,16 @@ function JobForm({ user }) {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch('/api/functions/job-scraper', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/job-scraper`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ url: jobUrl }),
         },
-        body: JSON.stringify({ url: jobUrl }),
-      })
+      )
 
       if (!response.ok) {
         throw new Error('Failed to fetch job details')

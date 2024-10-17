@@ -45,9 +45,9 @@ Sample `200` Response:
 
 This function requires the following environment variable:
 
-- `HUGGINGFACE_API_KEY`: Your Hugging Face API key for accessing the inference API.
+- `OPENAI_API_KEY`: Your OpenAI API key for accessing the GPT-4o model.
 
 To set up:
 
 1. Copy `.env.example` to `.env`
-2. Replace the placeholder value with your actual Hugging Face API key
+2. Replace the placeholder value with your actual OpenAI API key
