@@ -49,10 +49,12 @@ function JobForm({ user }) {
       )
 
       if (!response.ok) {
-        throw new Error('Failed to fetch job details')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to fetch job details')
       }
 
-      const jobDetails = await response.json()
+      const scrapedData = await response.json()
+      const jobDetails = scrapedData
 
       if (jobDetails) {
         setTitle(jobDetails.title || '')

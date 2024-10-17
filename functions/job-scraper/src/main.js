@@ -10,7 +10,7 @@ const openai = new OpenAI({
 export default async ({ req, res, log, error }) => {
   if (req.method === 'OPTIONS') {
     return res.send('', 200, {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*', // Or specify your frontend URL
       'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     });
@@ -88,7 +88,7 @@ async function scrapeJobPosting(url) {
 async function processJobData(scrapedData) {
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-4',
       messages: [
         {
           role: 'system',
