@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getJobs } from '../utils/db'
+import JobCard from './JobCard'
 
 function JobList() {
   const [jobs, setJobs] = useState([])
@@ -14,16 +15,14 @@ function JobList() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Job Applications</h2>
-      <ul className="space-y-4">
+      <h2 className="text-3xl font-bold text-secondary-900 mb-6">
+        Job Applications
+      </h2>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {jobs.map((job) => (
-          <li key={job.id} className="bg-white p-4 rounded shadow">
-            <h3 className="text-xl font-semibold">{job.title}</h3>
-            <p className="text-gray-600">{job.company}</p>
-            <p className="text-sm text-gray-500">Status: {job.status}</p>
-          </li>
+          <JobCard key={job.$id} job={job} />
         ))}
-      </ul>
+      </div>
     </div>
   )
 }
