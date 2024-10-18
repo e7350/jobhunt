@@ -31,6 +31,7 @@ export const addJob = async (job, userId) => {
       salary: job.salary || null,
       location: job.location || null,
       url: job.url || null,
+      // We don't need to add preparationTasks here
     },
   )
 }

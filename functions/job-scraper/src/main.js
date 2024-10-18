@@ -55,9 +55,7 @@ async function scrapeJobPosting(url) {
   const location =
     $('[data-test="location"]').text().trim() ||
     $('meta[name="geo.placename"]').attr('content');
-  const description =
-    $('[data-test="jobDescriptionText"]').text().trim() ||
-    $('meta[name="description"]').attr('content');
+  const description = $('body').text().trim();
 
   const requirements = [];
   $('ul li').each((i, el) => {
@@ -82,22 +80,24 @@ async function scrapeJobPosting(url) {
     description,
     requirements: requirements.join('\n'),
     salary,
+    url, // Add the original URL
   };
 }
 
 async function processJobData(scrapedData, log) {
+  log('scrapedData=====>', scrapedData);
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: 'gpt-4o-mini', // Leave this as gpt-4o-mini. It's the most capable model.
       messages: [
         {
           role: 'system',
           content:
-            'You are an expert job analyst that extracts job details from scraped web content.',
+            'You are an expert job analyst that extracts job details from scraped web content and provides helpful advice for job seekers.',
         },
         {
           role: 'user',
-          content: `Make sense of the following job details from this text. ${JSON.stringify(scrapedData)}
+          content: `Analyze the following job details and provide a structured response. Job data: ${JSON.stringify(scrapedData)}
           ---
           Return the result in this format:
           {
@@ -110,13 +110,13 @@ async function processJobData(scrapedData, log) {
             "applicationDeadline": "application deadline if mentioned",
             "employmentType": "full-time, part-time, contract, etc.",
             "experienceLevel": "entry-level, mid-level, senior, etc.",
-            "title": "the job title",
-            "company": "the company name",
-          If any field is not found, omit it from the JSON.`,
+            "preparationTasks": ["An array of 5-7 specific tasks to help the user prepare for and increase their chances of getting this job"]
+          }
+          If any field is not found, omit it from the JSON. Ensure the preparationTasks are specific, actionable, and tailored to the job description.`,
         },
       ],
       temperature: 0.2,
-      max_tokens: 1000,
+      max_tokens: 1500, // Increased to accommodate more detailed response
     });
 
     log('completion', completion.choices[0].message.content);

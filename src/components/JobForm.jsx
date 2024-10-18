@@ -15,6 +15,8 @@ function JobForm({ user }) {
   const navigate = useNavigate()
   const [salary, setSalary] = useState('')
   const [location, setLocation] = useState('')
+  const [preparationTasks, setPreparationTasks] = useState([])
+  const [aiGeneratedTasks, setAiGeneratedTasks] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,6 +40,17 @@ function JobForm({ user }) {
           jobId: job.$id,
           description: initialTask,
           dueDate: initialTaskDueDate || null,
+        },
+        user.$id,
+      )
+    }
+    // Add AI-generated tasks
+    for (const taskDescription of aiGeneratedTasks) {
+      await addTask(
+        {
+          jobId: job.$id,
+          description: taskDescription,
+          dueDate: null,
         },
         user.$id,
       )
@@ -74,6 +87,7 @@ function JobForm({ user }) {
         setCompany(jobDetails.company || '')
         setSalary(jobDetails.salary || '')
         setLocation(jobDetails.location || '')
+        setAiGeneratedTasks(jobDetails.preparationTasks || [])
         setInitialNote(`${jobDetails.description || 'N/A'}
 Requirements: ${
           jobDetails.requirements ? jobDetails.requirements.join(', ') : 'N/A'
@@ -255,7 +269,25 @@ Requirements: ${
             maxLength={100}
           />
         </div>
-        <button type="submit" className="btn btn-primary w-full">
+        {aiGeneratedTasks.length > 0 && (
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold mb-2">
+              AI-Generated Preparation Tasks
+            </h3>
+            <ul className="list-disc pl-5">
+              {aiGeneratedTasks.map((task, index) => (
+                <li key={index} className="mb-1">
+                  {task}
+                </li>
+              ))}
+            </ul>
+            <p className="text-sm text-secondary-600 mt-2">
+              These tasks will be added to your job application when you submit
+              the form.
+            </p>
+          </div>
+        )}
+        <button type="submit" className="btn btn-primary w-full mt-6">
           Add Job
         </button>
       </form>

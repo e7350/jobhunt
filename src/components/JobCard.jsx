@@ -188,6 +188,19 @@ function JobCard({ job, onUpdate, user }) {
             </button>
           </form>
         </div>
+
+        {job.preparationTasks && job.preparationTasks.length > 0 && (
+          <div className="mt-4">
+            <h4 className="font-semibold mb-2">Preparation Tasks</h4>
+            <ul className="list-disc pl-5 space-y-1">
+              {job.preparationTasks.map((task, index) => (
+                <li key={index} className="text-sm">
+                  {task}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   )
