@@ -272,7 +272,7 @@ Requirements: ${
         {aiGeneratedTasks.length > 0 && (
           <div className="mt-6">
             <h3 className="text-lg font-semibold mb-2">
-              AI-Generated Preparation Tasks
+              Our Recommended Preparation Tasks
             </h3>
             <ul className="list-disc pl-5">
               {aiGeneratedTasks.map((task, index) => (
