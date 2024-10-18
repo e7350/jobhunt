@@ -32,7 +32,7 @@ export default async ({ req, res, log, error }) => {
 
   try {
     const scrapedData = await scrapeJobPosting(url);
-    const processedData = await processJobData(scrapedData);
+    const processedData = await processJobData(scrapedData, log);
     return res.json(processedData, 200, {
       'Access-Control-Allow-Origin': '*',
     });
@@ -85,33 +85,33 @@ async function scrapeJobPosting(url) {
   };
 }
 
-async function processJobData(scrapedData) {
+async function processJobData(scrapedData, log) {
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
           content:
-            'You are a helpful assistant that extracts job details from scraped web content.',
+            'You are an expert job analyst that extracts job details from scraped web content.',
         },
         {
           role: 'user',
-          content: `Extract and structure the following job details from this text. Return the result as a JSON object:
-
-          ${JSON.stringify(scrapedData)}
-
-          Include the following fields if available:
-          - title: The job title
-          - company: The company name
-          - location: The job location
-          - description: A brief job description
-          - requirements: An array of key job requirements
-          - salary: Salary information if available
-          - applicationDeadline: Application deadline if mentioned
-          - employmentType: Full-time, part-time, contract, etc.
-          - experienceLevel: Entry-level, mid-level, senior, etc.
-
+          content: `Make sense of the following job details from this text. ${JSON.stringify(scrapedData)}
+          ---
+          Return the result in this format:
+          {
+            "title": "the job title",
+            "company": "the company name",
+            "location": "the job location",
+            "description": "a brief job description",
+            "requirements": ["key job requirements"],
+            "salary": "salary information if available",
+            "applicationDeadline": "application deadline if mentioned",
+            "employmentType": "full-time, part-time, contract, etc.",
+            "experienceLevel": "entry-level, mid-level, senior, etc.",
+            "title": "the job title",
+            "company": "the company name",
           If any field is not found, omit it from the JSON.`,
         },
       ],
@@ -119,9 +119,11 @@ async function processJobData(scrapedData) {
       max_tokens: 1000,
     });
 
+    log('completion', completion.choices[0].message.content);
+
     return JSON.parse(completion.choices[0].message.content);
   } catch (error) {
-    console.error('Failed to process job data:', error);
+    console.error('==========> Failed to process job data:', error);
     return scrapedData; // Return original scraped data if AI processing fails
   }
 }

@@ -67,6 +67,7 @@ function JobForm({ user }) {
 
       const scrapedData = await response.json()
       const jobDetails = scrapedData
+      console.log(jobDetails)
 
       if (jobDetails) {
         setTitle(jobDetails.title || '')
