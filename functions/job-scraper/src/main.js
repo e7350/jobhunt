@@ -55,7 +55,10 @@ async function scrapeJobPosting(url) {
   const location =
     $('[data-test="location"]').text().trim() ||
     $('meta[name="geo.placename"]').attr('content');
-  const description = $('body').text().trim();
+
+  // Clean and summarize the description
+  const fullDescription = $('body').text().trim();
+  const cleanedDescription = cleanAndSummarizeText(fullDescription);
 
   const requirements = [];
   $('ul li').each((i, el) => {
@@ -77,11 +80,23 @@ async function scrapeJobPosting(url) {
     title,
     company,
     location,
-    description,
-    requirements: requirements.join('\n'),
+    description: cleanedDescription,
+    requirements: requirements.join(' '),
     salary,
-    url, // Add the original URL
+    url,
   };
+}
+
+function cleanAndSummarizeText(text, maxLength = 1000) {
+  // Remove newlines and extra spaces
+  let cleaned = text.replace(/\s+/g, ' ').trim();
+
+  // Simple summarization: keep the first `maxLength` characters
+  if (cleaned.length > maxLength) {
+    cleaned = cleaned.substring(0, maxLength) + '...';
+  }
+
+  return cleaned;
 }
 
 async function processJobData(scrapedData, log) {
@@ -116,7 +131,7 @@ async function processJobData(scrapedData, log) {
         },
       ],
       temperature: 0.2,
-      max_tokens: 1500, // Increased to accommodate more detailed response
+      max_tokens: 1500,
     });
 
     log('completion', completion.choices[0].message.content);
