@@ -1,274 +1,284 @@
 {
-  "projectId": "job-hunter",
-  "projectName": "Job Hunter",
-  "settings": {
-    "services": {
-      "account": true,
-      "avatars": true,
-      "databases": true,
-      "locale": true,
-      "health": true,
-      "storage": true,
-      "teams": true,
-      "users": true,
-      "functions": true,
-      "graphql": true,
-      "messaging": true
-    },
-    "auth": {
-      "methods": {
-        "jwt": true,
-        "phone": true,
-        "invites": true,
-        "anonymous": true,
-        "email-otp": true,
-        "magic-url": true,
-        "email-password": true
-      },
-      "security": {
-        "duration": 31536000,
-        "limit": 0,
-        "sessionsLimit": 10,
-        "passwordHistory": 0,
-        "passwordDictionary": false,
-        "personalDataCheck": false,
-        "sessionAlerts": false,
-        "mockNumbers": []
-      }
-    }
-  },
-  "databases": [
-    {
-      "$id": "job-hunt-db",
-      "name": "JobHuntDB",
-      "enabled": true
-    }
-  ],
-  "collections": [
-    {
-      "$id": "jobs",
-      "$permissions": [
-        "create(\"users\")",
-        "read(\"users\")",
-        "update(\"users\")",
-        "delete(\"users\")"
-      ],
-      "databaseId": "job-hunt-db",
-      "name": "Jobs",
-      "enabled": true,
-      "documentSecurity": false,
-      "attributes": [
-        {
-          "key": "title",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 100,
-          "default": null
+    "projectId": "job-hunter",
+    "projectName": "Job Hunter",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
         },
-        {
-          "key": "company",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 100,
-          "default": null
-        },
-        {
-          "key": "status",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "elements": ["started", "interviewing", "completed", "not-started"],
-          "format": "enum",
-          "default": null
-        },
-        {
-          "key": "createdAt",
-          "type": "datetime",
-          "required": true,
-          "array": false,
-          "format": "",
-          "default": null
-        },
-        {
-          "key": "updatedAt",
-          "type": "datetime",
-          "required": false,
-          "array": false,
-          "format": "",
-          "default": null
-        },
-        {
-          "key": "userId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 50,
-          "default": null
-        },
-        {
-          "key": "salary",
-          "type": "string",
-          "required": false,
-          "array": false,
-          "size": 100,
-          "default": null
-        },
-        {
-          "key": "location",
-          "type": "string",
-          "required": false,
-          "array": false,
-          "size": 100,
-          "default": null
-        },
-        {
-          "key": "url",
-          "type": "string",
-          "required": false,
-          "array": false,
-          "size": 255,
-          "default": null
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": true,
+                "anonymous": true,
+                "email-otp": true,
+                "magic-url": true,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
         }
-      ],
-      "indexes": []
     },
-    {
-      "$id": "job-notes",
-      "$permissions": [
-        "create(\"users\")",
-        "read(\"users\")",
-        "update(\"users\")",
-        "delete(\"users\")"
-      ],
-      "databaseId": "job-hunt-db",
-      "name": "Job Notes",
-      "enabled": true,
-      "documentSecurity": false,
-      "attributes": [
+    "databases": [
         {
-          "key": "jobId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 100,
-          "default": null
-        },
-        {
-          "key": "content",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 3000,
-          "default": null
-        },
-        {
-          "key": "createdAt",
-          "type": "datetime",
-          "required": true,
-          "array": false,
-          "format": "",
-          "default": null
-        },
-        {
-          "key": "userId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 50,
-          "default": null
+            "$id": "job-hunt-db",
+            "name": "JobHuntDB",
+            "enabled": true
         }
-      ],
-      "indexes": []
-    },
-    {
-      "$id": "job-tasks",
-      "$permissions": [
-        "create(\"users\")",
-        "read(\"users\")",
-        "update(\"users\")",
-        "delete(\"users\")"
-      ],
-      "databaseId": "job-hunt-db",
-      "name": "Job Tasks",
-      "enabled": true,
-      "documentSecurity": false,
-      "attributes": [
+    ],
+    "collections": [
         {
-          "key": "jobId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 100,
-          "default": null
+            "$id": "jobs",
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "job-hunt-db",
+            "name": "Jobs",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "company",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "status",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "started",
+                        "interviewing",
+                        "not-started",
+                        "got-offer",
+                        "declined"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "createdAt",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "updatedAt",
+                    "type": "datetime",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "userId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                },
+                {
+                    "key": "salary",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "location",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "url",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                }
+            ],
+            "indexes": []
         },
         {
-          "key": "description",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 2000,
-          "default": null
+            "$id": "job-notes",
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "job-hunt-db",
+            "name": "Job Notes",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "jobId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 3000,
+                    "default": null
+                },
+                {
+                    "key": "createdAt",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "userId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                }
+            ],
+            "indexes": []
         },
         {
-          "key": "completed",
-          "type": "boolean",
-          "required": true,
-          "array": false,
-          "default": null
-        },
-        {
-          "key": "dueDate",
-          "type": "datetime",
-          "required": false,
-          "array": false,
-          "format": "",
-          "default": null
-        },
-        {
-          "key": "userId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 100,
-          "default": null
-        },
-        {
-          "key": "createdAt",
-          "type": "datetime",
-          "required": true,
-          "array": false,
-          "format": "",
-          "default": null
-        },
-        {
-          "key": "updatedAt",
-          "type": "datetime",
-          "required": true,
-          "array": false,
-          "format": "",
-          "default": null
+            "$id": "job-tasks",
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "job-hunt-db",
+            "name": "Job Tasks",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "jobId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 2000,
+                    "default": null
+                },
+                {
+                    "key": "completed",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "dueDate",
+                    "type": "datetime",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "userId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "createdAt",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "updatedAt",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                }
+            ],
+            "indexes": []
         }
-      ],
-      "indexes": []
-    }
-  ],
-  "functions": [
-    {
-      "$id": "job-scraper",
-      "name": "job-scraper",
-      "runtime": "node-18.0",
-      "execute": ["any"],
-      "events": [],
-      "scopes": ["users.read"],
-      "schedule": "",
-      "timeout": 15,
-      "enabled": true,
-      "logging": true,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "path": "functions/job-scraper"
-    }
-  ]
+    ],
+    "functions": [
+        {
+            "$id": "job-scraper",
+            "name": "job-scraper",
+            "runtime": "node-18.0",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/job-scraper"
+        }
+    ]
 }

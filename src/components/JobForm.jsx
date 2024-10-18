@@ -187,7 +187,8 @@ Requirements: ${
             <option value="not-started">Not Started</option>
             <option value="started">Started</option>
             <option value="interviewing">Interviewing</option>
-            <option value="completed">Completed</option>
+            <option value="got-offer">Got an Offer</option>
+            <option value="declined">Declined</option>
           </select>
         </div>
         <div>
