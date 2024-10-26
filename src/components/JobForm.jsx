@@ -15,7 +15,6 @@ function JobForm({ user }) {
   const navigate = useNavigate()
   const [salary, setSalary] = useState('')
   const [location, setLocation] = useState('')
-  const [preparationTasks, setPreparationTasks] = useState([])
   const [aiGeneratedTasks, setAiGeneratedTasks] = useState([])
 
   const handleSubmit = async (e) => {
@@ -63,7 +62,9 @@ function JobForm({ user }) {
     setError(null)
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/job-scraper`,
+        `${
+          import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        }/job-scraper`,
         {
           method: 'POST',
           headers: {
