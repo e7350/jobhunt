@@ -1,6 +1,6 @@
 import { Client } from 'node-appwrite';
 import axios from 'axios';
-import OpenAI from 'openai';
+import OpenAI from 'openai/index.mjs';
 import * as cheerio from 'cheerio';
 
 const openai = new OpenAI({

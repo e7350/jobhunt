@@ -279,6 +279,23 @@
             "entrypoint": "src/main.js",
             "commands": "npm install",
             "path": "functions/job-scraper"
+        },
+        {
+            "$id": "job-scrapper2",
+            "execute": [
+                "any"
+            ],
+            "name": "job-scrapper2",
+            "enabled": true,
+            "logging": true,
+            "runtime": "node-18.0",
+            "scopes": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/job-scrapper2"
         }
     ]
 }
